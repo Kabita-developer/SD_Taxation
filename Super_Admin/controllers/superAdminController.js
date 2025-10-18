@@ -246,3 +246,59 @@ exports.resetPassword = async (req, res) => {
     res.status(500).json({ success: false, message: 'Server error' });
   }
 };
+
+// ✅ Who Am I controller
+exports.whoAmI = async (req, res) => {
+  try {
+    // Get user details from token (set by auth middleware)
+    const user = req.user;
+    
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: 'User not authenticated'
+      });
+    }
+
+    // Get full user details from database
+    const fullUser = await SuperAdmin.findById(user.id);
+    
+    if (!fullUser) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Calculate token expiration
+    const tokenExpiration = new Date(user.exp * 1000); // Convert from Unix timestamp
+    const currentTime = new Date();
+    const timeUntilExpiry = tokenExpiration.getTime() - currentTime.getTime();
+    const hoursUntilExpiry = Math.floor(timeUntilExpiry / (1000 * 60 * 60));
+    const minutesUntilExpiry = Math.floor((timeUntilExpiry % (1000 * 60 * 60)) / (1000 * 60));
+
+    res.json({
+      success: true,
+      message: 'User details retrieved successfully',
+      data: {
+        user: {
+          _id: fullUser._id,
+          name: fullUser.name,
+          email: fullUser.email,
+          role: fullUser.role,
+          createdAt: fullUser.createdAt,
+          updatedAt: fullUser.updatedAt
+        },
+        token: {
+          issuedAt: new Date(user.iat * 1000).toISOString(),
+          expiresAt: tokenExpiration.toISOString(),
+          expiresIn: `${hoursUntilExpiry}h ${minutesUntilExpiry}m`,
+          isExpired: timeUntilExpiry <= 0
+        }
+      }
+    });
+  } catch (err) {
+    console.error('Who Am I error:', err);
+    res.status(500).json({ success: false, message: 'Server error' });
+  }
+};

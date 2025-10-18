@@ -76,7 +76,8 @@ const CompanySchema = new mongoose.Schema(
             default: 'active'
         }
     },
-    {timestamps: true}
+    {timestamps: true},
+    { strict: false }
 );
 
 module.exports = mongoose.model('Company', CompanySchema);

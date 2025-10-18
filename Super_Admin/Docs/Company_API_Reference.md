@@ -161,6 +161,18 @@ curl -X POST http://localhost:3000/api/companies/create \
   -F "company_website=https://www.acmecorp.com"
 ```
 
+**cURL (Update Company):**
+```bash
+curl -X POST http://localhost:3000/api/companies/:id \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+  -F "company_name=Updated Company Name" \
+  -F "company_email=updated@company.com" \
+  -F "company_phone=+1-555-999-9999" \
+  -F 'company_address={"street":"456 Updated Street","city":"New York","state":"NY","country":"USA","zipCode":"10001"}' \
+  -F "company_logo=@/path/to/new-logo.png" \
+  -F "company_website=https://www.updatedcompany.com"
+```
+
 **PowerShell (with file upload):**
 ```powershell
 $form = @{
@@ -175,6 +187,22 @@ $form = @{
 Invoke-RestMethod -Uri "http://localhost:3000/api/companies/create" -Method POST `
   -Headers @{"Authorization"="Bearer YOUR_JWT_TOKEN"} `
   -Form $form
+```
+
+**PowerShell (Update Company):**
+```powershell
+$updateForm = @{
+    company_name = "Updated Company Name"
+    company_email = "updated@company.com"
+    company_phone = "+1-555-999-9999"
+    company_address = '{"street":"456 Updated Street","city":"New York","state":"NY","country":"USA","zipCode":"10001"}'
+    company_logo = Get-Item "C:\path\to\new-logo.png"
+    company_website = "https://www.updatedcompany.com"
+}
+
+Invoke-RestMethod -Uri "http://localhost:3000/api/companies/:id" -Method POST `
+  -Headers @{"Authorization"="Bearer YOUR_JWT_TOKEN"} `
+  -Form $updateForm
 ```
 
 **JavaScript (Fetch with FormData):**
@@ -203,6 +231,34 @@ const response = await fetch('http://localhost:3000/api/companies/create', {
 
 const data = await response.json();
 console.log(data);
+```
+
+**JavaScript (Update Company):**
+```javascript
+const updateFormData = new FormData();
+updateFormData.append('company_name', 'Updated Company Name');
+updateFormData.append('company_email', 'updated@company.com');
+updateFormData.append('company_phone', '+1-555-999-9999');
+updateFormData.append('company_address', JSON.stringify({
+  street: "456 Updated Street",
+  city: "New York",
+  state: "NY",
+  country: "USA",
+  zipCode: "10001"
+}));
+updateFormData.append('company_logo', newLogoFileInput.files[0]); // New logo file
+updateFormData.append('company_website', 'https://www.updatedcompany.com');
+
+const updateResponse = await fetch(`http://localhost:3000/api/companies/${companyId}`, {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer YOUR_JWT_TOKEN'
+  },
+  body: updateFormData
+});
+
+const updateData = await updateResponse.json();
+console.log(updateData);
 ```
 
 **Real-world Examples:**
@@ -278,21 +334,27 @@ console.log(data);
   "message": "Companies retrieved successfully",
   "data": [
     {
-      "_id": "64f8a1b2c3d4e5f6a7b8c9d0",
-      "company_name": "Tech Solutions Inc",
-      "company_email": "info@techsolutions.com",
-      "company_phone": "+1-555-0123",
-      "company_address": "123 Tech Street, Silicon Valley, CA 94000",
-      "company_logo": "https://example.com/logo.png",
-      "company_website": "https://techsolutions.com",
+      "_id": "68f210dae0021a8a2431defc",
+      "company_name": "Local Services Inc",
+      "company_email": "contact@localservices.com",
+      "company_phone": "1234567891",
+      "company_address": {
+        "street": "321 Main Street",
+        "city": "Anytown",
+        "state": "ST",
+        "country": "USA",
+        "zipCode": "12345"
+      },
+      "company_logo": null,
+      "company_website": null,
       "status": "active",
       "created_by": {
-        "_id": "64f8a1b2c3d4e5f6a7b8c9d1",
-        "name": "Super Admin",
-        "email": "admin@example.com"
+        "_id": "68f1df75eb4191c9a3610f08",
+        "name": "superadmin",
+        "email": "superadmin@gmail.com"
       },
-      "createdAt": "2024-12-17T10:30:00.000Z",
-      "updatedAt": "2024-12-17T10:30:00.000Z"
+      "createdAt": "2025-10-17T09:48:10.094Z",
+      "updatedAt": "2025-10-17T09:48:10.094Z"
     }
   ],
   "count": 1
@@ -350,7 +412,7 @@ console.log(data);
 
 ### 4. Update Company
 
-**Endpoint:** `PUT /:id`
+**Endpoint:** `POST /:id`
 
 **Description:** Updates an existing company.
 
@@ -427,7 +489,7 @@ console.log(data);
 
 ### 6. Delete Company
 
-**Endpoint:** `DELETE /:id`
+**Endpoint:** `POST /:id/delete`
 
 **Description:** Deletes a company from the system.
 
@@ -451,6 +513,33 @@ console.log(data);
   "success": false,
   "message": "Company not found"
 }
+```
+
+**Example Usage:**
+
+**cURL:**
+```bash
+curl -X POST http://localhost:3000/api/companies/:id/delete \
+  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+```
+
+**PowerShell:**
+```powershell
+Invoke-RestMethod -Uri "http://localhost:3000/api/companies/:id/delete" -Method POST `
+  -Headers @{"Authorization"="Bearer YOUR_JWT_TOKEN"}
+```
+
+**JavaScript:**
+```javascript
+const deleteResponse = await fetch(`http://localhost:3000/api/companies/${companyId}/delete`, {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer YOUR_JWT_TOKEN'
+  }
+});
+
+const deleteData = await deleteResponse.json();
+console.log(deleteData);
 ```
 
 ---

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { signup, login, logout, forgetPassword, changePassword, resetPassword } = require('../controllers/superAdminController');
+const { signup, login, logout, forgetPassword, changePassword, resetPassword, whoAmI } = require('../controllers/superAdminController');
 const validate = require('../middleware/validate');
 const auth = require('../middleware/auth');
 const { signupSchema, loginSchema, forgetPasswordSchema, changePasswordSchema, resetPasswordSchema } = require('../validations/superAdminValidation');
@@ -23,5 +23,8 @@ router.post('/change-password', auth, validate(changePasswordSchema), changePass
 
 // Reset Password Route
 router.post('/reset-password', validate(resetPasswordSchema), resetPassword);
+
+// Who Am I Route (requires authentication)
+router.get('/whoami', auth, whoAmI);
 
 module.exports = router;

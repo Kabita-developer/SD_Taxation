@@ -106,11 +106,27 @@ exports.getAllCompanies = async (req, res) => {
       .populate('created_by', 'name email')
       .sort({ createdAt: -1 });
 
+    // Format response in compact format
+    const formattedCompanies = companies.map(company => ({
+      _id: company._id,
+      company_name: company.company_name,
+      company_email: company.company_email,
+      company_phone: company.company_phone,
+      company_address: company.company_address,
+      company_logo: company.company_logo,
+      company_website: company.company_website,
+      status: company.status,
+      created_by: company.created_by,
+      createdAt: company.createdAt,
+      updatedAt: company.updatedAt,
+      __v: company.__v
+    }));
+
     res.json({
       success: true,
       message: 'Companies retrieved successfully',
-      data: companies,
-      count: companies.length
+      data: formattedCompanies,
+      count: formattedCompanies.length
     });
   } catch (err) {
     console.error('Get companies error:', err);

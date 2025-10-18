@@ -31,12 +31,12 @@ router.get('/', getAllCompanies);
 router.get('/:id', getCompanyById);
 
 // Update Company
-router.put('/:id', handleUpload, validate(updateCompanySchema), updateCompany);
+router.post('/:id', handleUpload, validate(updateCompanySchema), updateCompany);
 
 // Update Company Status
 router.patch('/:id/status', validate(updateCompanyStatusSchema), updateCompanyStatus);
 
 // Delete Company
-router.delete('/:id', deleteCompany);
+router.post('/:id/delete', deleteCompany);
 
 module.exports = router;
