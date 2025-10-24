@@ -3,7 +3,23 @@ const Joi = require('joi');
 
 module.exports = (schema) => {
   return (req, res, next) => {
-    // Ensure req.body exists
+    // For GET requests, validate query parameters
+    if (req.method === 'GET') {
+      const { error, value } = schema.validate(req.query, { abortEarly: false, stripUnknown: true });
+      if (error) {
+        const errors = error.details.map((d) => d.message);
+        return res.status(400).json({
+          success: false,
+          message: 'Validation failed',
+          errors
+        });
+      }
+      req.query = value;
+      next();
+      return;
+    }
+
+    // For other methods, validate request body
     if (!req.body) {
       return res.status(400).json({
         success: false,

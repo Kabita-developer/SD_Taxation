@@ -40,6 +40,12 @@ exports.createEmployee = async (req, res) => {
       phone, 
       department, 
       designation, 
+      empCode,
+      salary,
+      bankDetails,
+      aadharId,
+      panNo,
+      joinDate,
       address, 
       company 
     } = req.body;
@@ -103,6 +109,12 @@ exports.createEmployee = async (req, res) => {
       phone,
       department,
       designation,
+      empCode,
+      salary,
+      bankDetails,
+      aadharId,
+      panNo,
+      joinDate,
       address,
       company,
       createdBy: req.user ? req.user.id : "68f210dae0021a8a2431defc" // From auth middleware or default

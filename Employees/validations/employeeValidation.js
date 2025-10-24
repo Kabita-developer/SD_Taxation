@@ -34,6 +34,45 @@ exports.createEmployeeSchema = Joi.object({
     'string.min': 'Designation must be at least 2 characters',
     'string.max': 'Designation cannot exceed 100 characters'
   }),
+  empCode: Joi.string().min(3).max(20).pattern(/^[A-Z0-9]+$/).required().messages({
+    'string.empty': 'Employee code is required',
+    'string.min': 'Employee code must be at least 3 characters',
+    'string.max': 'Employee code cannot exceed 20 characters',
+    'string.pattern.base': 'Employee code can only contain uppercase letters and numbers'
+  }),
+  salary: Joi.number().min(0).max(99999999).required().messages({
+    'number.base': 'Salary must be a number',
+    'number.min': 'Salary cannot be negative',
+    'number.max': 'Salary cannot exceed 99,999,999'
+  }),
+  bankDetails: Joi.object({
+    bankName: Joi.string().max(100).messages({
+      'string.max': 'Bank name cannot exceed 100 characters'
+    }),
+    accountNumber: Joi.string().max(20).pattern(/^[0-9]+$/).messages({
+      'string.max': 'Account number cannot exceed 20 characters',
+      'string.pattern.base': 'Account number can only contain digits'
+    }),
+    ifsc: Joi.string().max(11).pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/).messages({
+      'string.max': 'IFSC code cannot exceed 11 characters',
+      'string.pattern.base': 'Invalid IFSC code format (e.g., SBIN0001234)'
+    }),
+    branch: Joi.string().max(100).messages({
+      'string.max': 'Branch name cannot exceed 100 characters'
+    })
+  }),
+  aadharId: Joi.string().length(12).pattern(/^[0-9]{12}$/).messages({
+    'string.length': 'Aadhar ID must be exactly 12 digits',
+    'string.pattern.base': 'Aadhar ID must contain only digits'
+  }),
+  panNo: Joi.string().length(10).pattern(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/).messages({
+    'string.length': 'PAN number must be exactly 10 characters',
+    'string.pattern.base': 'Invalid PAN number format (e.g., ABCDE1234F)'
+  }),
+  joinDate: Joi.date().required().messages({
+    'date.base': 'Join date must be a valid date',
+    'any.required': 'Join date is required'
+  }),
   address: Joi.object({
     street: Joi.string().max(200).messages({
       'string.max': 'Street address cannot exceed 200 characters'
@@ -85,6 +124,43 @@ exports.updateEmployeeSchema = Joi.object({
   designation: Joi.string().min(2).max(100).messages({
     'string.min': 'Designation must be at least 2 characters',
     'string.max': 'Designation cannot exceed 100 characters'
+  }),
+  empCode: Joi.string().min(3).max(20).pattern(/^[A-Z0-9]+$/).messages({
+    'string.min': 'Employee code must be at least 3 characters',
+    'string.max': 'Employee code cannot exceed 20 characters',
+    'string.pattern.base': 'Employee code can only contain uppercase letters and numbers'
+  }),
+  salary: Joi.number().min(0).max(99999999).messages({
+    'number.base': 'Salary must be a number',
+    'number.min': 'Salary cannot be negative',
+    'number.max': 'Salary cannot exceed 99,999,999'
+  }),
+  bankDetails: Joi.object({
+    bankName: Joi.string().max(100).messages({
+      'string.max': 'Bank name cannot exceed 100 characters'
+    }),
+    accountNumber: Joi.string().max(20).pattern(/^[0-9]+$/).messages({
+      'string.max': 'Account number cannot exceed 20 characters',
+      'string.pattern.base': 'Account number can only contain digits'
+    }),
+    ifsc: Joi.string().max(11).pattern(/^[A-Z]{4}0[A-Z0-9]{6}$/).messages({
+      'string.max': 'IFSC code cannot exceed 11 characters',
+      'string.pattern.base': 'Invalid IFSC code format (e.g., SBIN0001234)'
+    }),
+    branch: Joi.string().max(100).messages({
+      'string.max': 'Branch name cannot exceed 100 characters'
+    })
+  }),
+  aadharId: Joi.string().length(12).pattern(/^[0-9]{12}$/).messages({
+    'string.length': 'Aadhar ID must be exactly 12 digits',
+    'string.pattern.base': 'Aadhar ID must contain only digits'
+  }),
+  panNo: Joi.string().length(10).pattern(/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/).messages({
+    'string.length': 'PAN number must be exactly 10 characters',
+    'string.pattern.base': 'Invalid PAN number format (e.g., ABCDE1234F)'
+  }),
+  joinDate: Joi.date().messages({
+    'date.base': 'Join date must be a valid date'
   }),
   address: Joi.object({
     street: Joi.string().max(200).messages({

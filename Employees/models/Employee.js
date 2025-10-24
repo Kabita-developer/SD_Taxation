@@ -56,6 +56,66 @@ const EmployeeSchema = new mongoose.Schema(
             minlength: 2,
             maxlength: 100
         },
+        empCode: {
+            type: String,
+            required: true,
+            unique: true,
+            trim: true,
+            minlength: 3,
+            maxlength: 20,
+            match: [/^[A-Z0-9]+$/, 'Employee code can only contain uppercase letters and numbers']
+        },
+        salary: {
+            type: Number,
+            required: true,
+            min: 0,
+            max: 99999999
+        },
+        bankDetails: {
+            bankName: {
+                type: String,
+                trim: true,
+                maxlength: 100
+            },
+            accountNumber: {
+                type: String,
+                trim: true,
+                maxlength: 20,
+                match: [/^[0-9]+$/, 'Account number can only contain digits']
+            },
+            ifsc: {
+                type: String,
+                trim: true,
+                uppercase: true,
+                maxlength: 11,
+                match: [/^[A-Z]{4}0[A-Z0-9]{6}$/, 'Invalid IFSC code format']
+            },
+            branch: {
+                type: String,
+                trim: true,
+                maxlength: 100
+            }
+        },
+        aadharId: {
+            type: String,
+            unique: true,
+            trim: true,
+            match: [/^[0-9]{12}$/, 'Aadhar ID must be exactly 12 digits'],
+            sparse: true
+        },
+        panNo: {
+            type: String,
+            unique: true,
+            trim: true,
+            uppercase: true,
+            match: [/^[A-Z]{5}[0-9]{4}[A-Z]{1}$/, 'Invalid PAN number format'],
+            sparse: true
+        },
+        joinDate: {
+            type: Date,
+            required: true,
+            default: Date.now
+        },
         address: {
             street: {
                 type: String,

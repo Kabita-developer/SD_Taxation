@@ -65,6 +65,20 @@ const CompanySchema = new mongoose.Schema(
             match: [/^https?:\/\/.+/, 'Please enter a valid website URL'],
             default: null
         },
+        gstNumber: {
+            type: String,
+            trim: true,
+            uppercase: true,
+            match: [/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z0-9]{1}[Z]{1}[A-Z0-9]{1}$/, 'Invalid GST number format (e.g., 22ABCDE1234F1Z5)'],
+            unique: true,
+            sparse: true // Allows multiple null values but enforces uniqueness for non-null values
+        },
+        fiscalYear: {
+            type: String,
+            trim: true,
+            match: [/^[0-9]{4}-[0-9]{4}$/, 'Fiscal year must be in format YYYY-YYYY (e.g., 2024-2025)'],
+            default: null
+        },
         created_by: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'SuperAdmin',
@@ -76,8 +90,10 @@ const CompanySchema = new mongoose.Schema(
             default: 'active'
         }
     },
-    {timestamps: true},
-    { strict: false }
+    { 
+        timestamps: true,
+        strict: false 
+    }
 );
 
 module.exports = mongoose.model('Company', CompanySchema);

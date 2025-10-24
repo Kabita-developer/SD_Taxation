@@ -60,6 +60,8 @@ curl -X GET http://localhost:3000/api/companies \
   - `company_address`: Object (required)
   - `company_logo`: File (optional, image file)
   - `company_website`: String (optional, valid URL)
+  - `gstNumber`: String (optional, valid GST number format)
+  - `fiscalYear`: String (optional, format YYYY-YYYY)
 
 **Example Form Data:**
 ```
@@ -69,6 +71,8 @@ company_phone: "+1-555-123-4567"
 company_address: {"street":"123 Tech Street","city":"San Francisco","state":"CA","country":"USA","zipCode":"896589"}
 company_logo: [FILE] (image file)
 company_website: "https://www.acmecorp.com"
+gstNumber: "22ABCDE1234F1Z5"
+fiscalYear: "2024-2025"
 ```
 
 **Validation Rules:**
@@ -83,6 +87,8 @@ company_website: "https://www.acmecorp.com"
   - `zipCode`: Required, 3-20 characters
 - `company_logo`: Optional, image file (max 5MB, formats: jpg, jpeg, png, gif, webp)
 - `company_website`: Optional, valid URL
+- `gstNumber`: Optional, valid GST number format (e.g., 22ABCDE1234F1Z5)
+- `fiscalYear`: Optional, format YYYY-YYYY (e.g., 2024-2025)
 
 **Success Response (201):**
 ```json
@@ -103,6 +109,8 @@ company_website: "https://www.acmecorp.com"
     },
     "company_logo": "https://your-s3-bucket.s3.amazonaws.com/company-logos/logo_1234567890_abc123.png",
     "company_website": "https://www.acmecorp.com",
+    "gstNumber": "22ABCDE1234F1Z5",
+    "fiscalYear": "2024-2025",
     "status": "active",
     "created_at": "2024-12-17T10:30:00.000Z"
   }

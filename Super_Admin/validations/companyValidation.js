@@ -65,6 +65,12 @@ exports.createCompanySchema = Joi.object({
   }),
   company_website: Joi.string().uri().optional().allow('').messages({
     'string.uri': 'Company website must be a valid URL'
+  }),
+  gstNumber: Joi.string().pattern(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z0-9]{1}[Z]{1}[A-Z0-9]{1}$/).optional().allow('').messages({
+    'string.pattern.base': 'Invalid GST number format (e.g., 22ABCDE1234F1Z5)'
+  }),
+  fiscalYear: Joi.string().pattern(/^[0-9]{4}-[0-9]{4}$/).optional().allow('').messages({
+    'string.pattern.base': 'Fiscal year must be in format YYYY-YYYY (e.g., 2024-2025)'
   })
 });
 
@@ -108,6 +114,12 @@ exports.updateCompanySchema = Joi.object({
   }),
   company_website: Joi.string().uri().optional().allow('').messages({
     'string.uri': 'Company website must be a valid URL'
+  }),
+  gstNumber: Joi.string().pattern(/^[0-9]{2}[A-Z]{5}[0-9]{4}[A-Z]{1}[A-Z0-9]{1}[Z]{1}[A-Z0-9]{1}$/).optional().allow('').messages({
+    'string.pattern.base': 'Invalid GST number format (e.g., 22ABCDE1234F1Z5)'
+  }),
+  fiscalYear: Joi.string().pattern(/^[0-9]{4}-[0-9]{4}$/).optional().allow('').messages({
+    'string.pattern.base': 'Fiscal year must be in format YYYY-YYYY (e.g., 2024-2025)'
   })
 });
 

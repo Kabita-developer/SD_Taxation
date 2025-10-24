@@ -103,6 +103,17 @@ Employee login/logout endpoints do not require authentication.
   "phone": "string (required, 10-20 characters)",
   "department": "string (required, 2-100 characters)",
   "designation": "string (optional, 2-100 characters)",
+  "empCode": "string (required, 3-20 characters, uppercase letters and numbers only)",
+  "salary": "number (required, 0-99999999)",
+  "bankDetails": {
+    "bankName": "string (optional, max 100 characters)",
+    "accountNumber": "string (optional, max 20 characters, digits only)",
+    "ifsc": "string (optional, 11 characters, format: SBIN0001234)",
+    "branch": "string (optional, max 100 characters)"
+  },
+  "aadharId": "string (optional, exactly 12 digits)",
+  "panNo": "string (optional, exactly 10 characters, format: ABCDE1234F)",
+  "joinDate": "date (required, ISO 8601 format: YYYY-MM-DD)",
   "address": {
     "street": "string (optional, max 200 characters)",
     "city": "string (optional, max 100 characters)",
@@ -124,6 +135,17 @@ Employee login/logout endpoints do not require authentication.
   "phone": "+919876543210",
   "department": "Operations",
   "designation": "Field Executive",
+  "empCode": "EMP001",
+  "salary": 45000,
+  "bankDetails": {
+    "bankName": "State Bank of India",
+    "accountNumber": "1234567890123456",
+    "ifsc": "SBIN0001234",
+    "branch": "MG Road Branch"
+  },
+  "aadharId": "123456789012",
+  "panNo": "ABCDE1234F",
+  "joinDate": "2024-01-15",
   "address": {
     "street": "No. 12, MG Road",
     "city": "Bangalore",
@@ -149,6 +171,17 @@ Employee login/logout endpoints do not require authentication.
     "phone": "+919876543210",
     "department": "Operations",
     "designation": "Field Executive",
+    "empCode": "EMP001",
+    "salary": 45000,
+    "bankDetails": {
+      "bankName": "State Bank of India",
+      "accountNumber": "1234567890123456",
+      "ifsc": "SBIN0001234",
+      "branch": "MG Road Branch"
+    },
+    "aadharId": "123456789012",
+    "panNo": "ABCDE1234F",
+    "joinDate": "2024-01-15T00:00:00.000Z",
     "address": {
       "street": "No. 12, MG Road",
       "city": "Bangalore",

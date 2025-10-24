@@ -17,8 +17,11 @@ exports.createCompany = async (req, res) => {
       company_email, 
       company_phone, 
       company_address,
-      company_website 
+      company_website,
+      gstNumber,
+      fiscalYear
     } = req.body;
+
 
     // Parse company_address if it's a JSON string
     let parsedCompanyAddress = company_address;
@@ -75,8 +78,11 @@ exports.createCompany = async (req, res) => {
       company_address: parsedCompanyAddress,
       company_logo: company_logo_url,
       company_website: company_website || null,
+      gstNumber: gstNumber || null,
+      fiscalYear: fiscalYear || null,
       created_by: req.user.id
     });
+
 
     res.status(201).json({
       success: true,
@@ -89,6 +95,8 @@ exports.createCompany = async (req, res) => {
         company_address: company.company_address,
         company_logo: company.company_logo,
         company_website: company.company_website,
+        gstNumber: company.gstNumber,
+        fiscalYear: company.fiscalYear,
         status: company.status,
         created_at: company.createdAt
       }
